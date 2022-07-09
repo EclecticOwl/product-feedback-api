@@ -39,7 +39,7 @@ jobs:
     - name: Run Tests
 
       run: |
-        export DEBUG=True
+        export DEBUG=${{ secrets.DEBUG }}
         export SECRET_KEY=${{ secrets.SECRET_KEY }}
         export POSTGRES_NAME=${{ secrets.POSTGRES_NAME }}
         export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
