@@ -17,5 +17,5 @@
 
 - Notable features:
     - Automated testing of Models and Views via GitHub Actions
-    - User Authentication
+    - User Authentication via Token 
 
