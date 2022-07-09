@@ -1,7 +1,8 @@
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, permissions
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 
@@ -26,7 +27,7 @@ class ProductList(APIView):
     Lists all of the Product instances with GET, or can POST a single instance.
     """
 
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request, format=None):
         products = Product.objects.all()
@@ -53,9 +54,7 @@ class ProductDetail(APIView):
     GET, PUT, and DELETE instances of Product.
     """
 
-    permission_classes = [
-        IsOwnerOrReadOnly,
-        ]
+    permission_classes = [IsOwnerOrReadOnly]
 
     def get_object(self, pk):
         try:
@@ -89,7 +88,7 @@ class FeedbackList(APIView):
     Lists all of the Feedback instances with GET, or can POST a single instance.
     """
 
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request, format=None):
         products = Feedback.objects.all()
@@ -111,7 +110,7 @@ class FeedbackDetail(APIView):
     """
 
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly,
+        IsAuthenticatedOrReadOnly,
         IsOwnerOrReadOnly,
         ]
 
@@ -147,7 +146,7 @@ class FeedbackUpvotes(APIView):
     """
 
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly,
+        IsAuthenticatedOrReadOnly,
         ]
 
     def get_object(self, pk):

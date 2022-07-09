@@ -8,7 +8,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['lit-reaches-65994.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['lit-reaches-65994.herokuapp.com', 'localhost', '127.0.0.1']
 
 AUTH_USER_MODEL = 'core.CustomUser'
 
@@ -66,7 +66,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'api.wsgi.application'
 
-if DEBUG == False:
+if DEBUG == True:
     DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -76,9 +76,9 @@ if DEBUG == False:
         
     }
     }
-
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES = { 'default': dj_database_url.config() }
+else:
+    db_from_env = dj_database_url.config(conn_max_age=600)
+    DATABASES = { 'default': dj_database_url.config() }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
