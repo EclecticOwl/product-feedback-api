@@ -31,6 +31,9 @@ jobs:
 
       run: |
         export SECRET_KEY=${{ secrets.SECRET_KEY }}
+        export POSTGRES_NAME=${{ secrets.POSTGRES_NAME }}
+        export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+        export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
         coverage run --omit=*/venv/*,*/migrations/* manage.py test
         coverage report
         rm -rf ../svg/coverage.svg
