@@ -45,5 +45,5 @@ jobs:
         export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
         coverage run --omit=*/venv/*,*/migrations/* manage.py test
         coverage report
-        rm -rf ../svg/coverage.svg
-        coverage-badge -o ../svg/coverage.svg
+        rm -rf ./svg/coverage.svg
+        coverage-badge -o ./svg/coverage.svg
