@@ -1,6 +1,5 @@
 from rest_framework.test import APIRequestFactory, APIClient, APITestCase, force_authenticate
-
-from django.urls import reverse
+from rest_framework.reverse import reverse
 
 from core import views
 from core.models import Product, Feedback, CustomUser as User
@@ -77,30 +76,37 @@ class FeedbackListTest(APITestCase):
 
 class FeedbackDetailTest(APITestCase):
     def setUp(self):
+        self.factory = APIRequestFactory()
         User.objects.create(username='mike', password='234')
         User.objects.create(username='mike2', password='234')
         self.user = User.objects.get(username='mike')
         self.user2 = User.objects.get(username='mike2')
         self.product = Product.objects.create(owner=self.user, title='blaaaaa').pk
-        Feedback.objects.create(
+        self.feedback = Feedback.objects.create(
             description='test',
             owner=self.user2,
             product=Product.objects.get(pk=self.product),
             title='noice',
-            )
+            ).pk
     
     def test_details(self):
         # Test detail GET request
-        response = self.client.get(reverse('feedback_detail', kwargs={'pk': self.product}))
+        request = self.factory.get(f'/api/feedback/{self.feedback}/')
+        response = views.FeedbackDetail.as_view()(request, pk=self.feedback)
         self.assertEqual(response.status_code, 200)
         # Test PUT request no authentication
-        response = self.client.put(reverse('feedback_detail', kwargs={'pk': self.product}), {"title": "test"})
+        request = self.factory.put(f'/api/feedback/{self.feedback}/', {"title": "test"})
+        response = views.FeedbackDetail.as_view()(request, pk=self.feedback)
         self.assertEqual(response.status_code, 401)
         # Test PUT request incorrect authorization
-        self.client.force_authenticate(self.user)
-        response = self.client.put(reverse('feedback_detail', kwargs={'pk': self.product}), {"title": "test"})
+        request = self.factory.put(f'/api/feedback/{self.feedback}/', {"title": "test"})
+        force_authenticate(request, user=self.user)
+        response = views.FeedbackDetail.as_view()(request, pk=self.feedback)
         self.assertEqual(response.status_code, 403)
         # Test successful PUT request
-        self.client.force_authenticate(self.user2)
-        response = self.client.put(reverse('feedback_detail', kwargs={'pk': self.product}), {"title": "test"})
+        request = self.factory.put(f'/api/feedback/{self.feedback}/', {"title": "hello"})
+        force_authenticate(request, user=self.user2)
+        response = views.FeedbackDetail.as_view()(request, pk=self.feedback)
         self.assertEqual(response.status_code, 200)
+        feedback = Feedback.objects.get(id=self.feedback)
+        self.assertEqual(feedback.title, 'hello')
