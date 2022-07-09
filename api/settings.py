@@ -74,7 +74,7 @@ if DEBUG == True:
         'USER': config('POSTGRES_USER'),
         'PASSWORD': config('POSTGRES_PASSWORD'),
         'HOST': 'localhost',
-        'PORT': '$PORT',
+        'PORT': 5432,
         
     }
     }
