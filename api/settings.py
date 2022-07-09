@@ -8,7 +8,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['lit-reaches-65994.herokuapp.com']
+ALLOWED_HOSTS = ['lit-reaches-65994.herokuapp.com', 'localhost']
 
 AUTH_USER_MODEL = 'core.CustomUser'
 
@@ -21,9 +21,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework.authtoken',
     'core',
+    'djoser',
+    'corsheaders',
 
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ( 'rest_framework.authentication.TokenAuthentication',),
+}
+DJOSER = {
+    'user': ['djoser.permissions.CurrentUserOrAdminOrReadOnly']
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
