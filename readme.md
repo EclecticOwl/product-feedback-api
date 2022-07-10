@@ -13,6 +13,8 @@
 
 - This is the backend portion of the project
 
+- You can find the frontend portion here: https://github.com/EclecticOwl/product-review-vue
+
 - Primarily uses Django and DjangoRestFramework in order to build the API
 
 - Notable features:
