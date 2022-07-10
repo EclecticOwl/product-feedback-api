@@ -35,7 +35,7 @@ DJOSER = {
     'user': ['djoser.permissions.CurrentUserOrAdminOrReadOnly']
 }
 
-CORS_ALLOWED_ORIGINS = ['https://guarded-coast-75766.herokuapp.com/']
+CORS_ALLOW_ALL = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
