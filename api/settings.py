@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['lit-reaches-65994.herokuapp.com', 'localhost', '127.0.0.1']
 
@@ -34,6 +34,8 @@ REST_FRAMEWORK = {
 DJOSER = {
     'user': ['djoser.permissions.CurrentUserOrAdminOrReadOnly']
 }
+
+CORS_ALLOWED_ORIGINS = ['guarded-coast-75766.herokuapp.com']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
